@@ -1,10 +1,10 @@
 import {getLinesAsNumbers} from "../helper";
 
 export const executeDay01 = async () => {
-    const example1 = await getIncreaseCount("day01/example.txt")
-    const input1 = await getIncreaseCount("day01/input.txt")
-    const example2 = await getIncreaseCountWindow("day01/example.txt")
-    const input2 = await getIncreaseCountWindow("day01/input.txt")
+    const example1 = await getIncreaseCount(__dirname + "/example.txt")
+    const input1 = await getIncreaseCount(__dirname + "/input.txt")
+    const example2 = await getIncreaseCountWindow(__dirname  + "/example.txt")
+    const input2 = await getIncreaseCountWindow(__dirname + "/input.txt")
     console.log({example1, input1, example2, input2});
 };
 
