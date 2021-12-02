@@ -1,19 +1,19 @@
 import {promises as fs} from "fs";
 
-export const getFileLines = async (filePath: string) => {
+export const getFileLines = async <T = string>(filePath: string, parse: (value: string) => T = (value: any) => value): Promise<T[]> => {
     const data = await fs.readFile(filePath, "binary");
-    const bufferData = Buffer.from(data);
-    const bufferString = bufferData.toString();
-    const inputs = bufferString.split(/\r?\n/g);
-    return inputs.filter(input => input);
+    return Buffer.from(data)
+        .toString()
+        .split(/\r?\n/g)
+        .filter(input => input)
+        .map(parse);
 };
 
 export const getLinesAsNumbers = async (filePath: string) => {
-    const lines = await getFileLines(filePath);
-    return lines.map(line => {
-        const number = parseInt(line);
+    return await getFileLines(filePath, (value) => {
+        const number = parseInt(value);
         if (isNaN(number))
-            throw new Error(`line cannot get parsed into a number ${line}`);
+            throw new Error(`line cannot get parsed into a number ${value}`);
         return number;
     });
 };
