@@ -20,5 +20,7 @@ export const getLinesAsNumbers = async (filePath: string) => {
 
 export const getCurrentDay = () => {
     const date = new Date();
-    return date.getDate();
+    const currentDate = date.getDate();
+    if (currentDate > 9) return currentDate.toString();
+    return `0${currentDate}`;
 };

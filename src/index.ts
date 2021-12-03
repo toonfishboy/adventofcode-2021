@@ -1,20 +1,12 @@
 import {getCurrentDay} from "./helper";
-import {executeDay01} from "./day01";
-import {executeDay02} from "./day02";
-import {executeDay03} from "./day03";
+import {readdir} from "fs/promises";
+import {join} from "path";
 
-const main = () => {
+(async () => {
+    const items = await readdir(__dirname, {withFileTypes: true});
+    const dirs = items.filter(item => item.isDirectory() && item.name.startsWith("day"));
     const day = getCurrentDay();
-    switch (day) {
-        case 1:
-            return executeDay01();
-        case 2:
-            return executeDay02();
-        case 3:
-            return executeDay03();
-        default:
-            console.error(`Current day ${day} is not available`);
-    }
-}
-
-main();
+    const dayDir = dirs.find(dir => dir.name.includes(day));
+    if (!dayDir) throw new Error("Can't find direction for the current day");
+    import(join(__dirname, dayDir.name, 'index.ts'));
+})();

@@ -1,6 +1,6 @@
 import {getFileLines} from "../helper";
 
-export const executeDay02 = async () => {
+const executeDay = async () => {
     const example1 = await getPosition(__dirname + "/example.txt");
     const input1 = await getPosition(__dirname + "/input.txt");
     const example2 = await getPositionWithAim(__dirname + "/example.txt");
@@ -31,3 +31,5 @@ const parseCommands = (value: string) => {
     const amountValue = parseInt(amount);
     return {direction, amount: amountValue};
 }
+
+executeDay();

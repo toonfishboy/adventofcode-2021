@@ -1,6 +1,6 @@
 import {getLinesAsNumbers} from "../helper";
 
-export const executeDay01 = async () => {
+const executeDay = async () => {
     const example1 = await getIncreaseCount(__dirname + "/example.txt")
     const input1 = await getIncreaseCount(__dirname + "/input.txt")
     const example2 = await getIncreaseCountWindow(__dirname  + "/example.txt")
@@ -30,3 +30,5 @@ export const getIncreaseCountWindow = async (filePath: string) => {
 };
 
 export const addWindows = (windows: number[]) => windows.reduce((prev, next) => prev + next, 0);
+
+executeDay();
