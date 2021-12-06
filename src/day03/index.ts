@@ -30,20 +30,20 @@ const calculatePowerConsumption = async (filePath: string) => {
 
 const calculateLifeSupportRating = async (filePath: string) => {
     const lines = await getFileLines(filePath, (line) => line.split(""));
-    const oxygenGeneratorRating = filterBitRows(lines, 0, "high");
-    const co2ScrubberRating = filterBitRows(lines, 0, "low");
+    const bitMax = lines[0].length;
+    const oxygenGeneratorRating = filterBitRows(lines, 0, "high", bitMax);
+    const co2ScrubberRating = filterBitRows(lines, 0, "low", bitMax);
     return parseBits(oxygenGeneratorRating) * parseBits(co2ScrubberRating);
 };
 
-const filterBitRows = (bitRows: string[][], bitPos: number, criteria: "high" | "low"): string[] => {
-    const bitMax = bitRows[0].length;
+const filterBitRows = (bitRows: string[][], bitPos: number, criteria: "high" | "low", bitMax: number): string[] => {
     const bitsAtPos = bitRows.map(bitRow => bitRow[bitPos]);
     const oneCount = bitsAtPos.filter(bit => bit === "1").length;
     const zeroCount = bitsAtPos.length - oneCount;
     const filterValue = getFilterValue(oneCount, zeroCount, criteria);
     const nextBitRows = bitRows.filter(bitRow => bitRow[bitPos] === filterValue);
-    if (bitPos === bitMax|| nextBitRows.length === 1) return nextBitRows[0];
-    return filterBitRows(nextBitRows, bitPos + 1, criteria);
+    if (bitPos === bitMax || nextBitRows.length === 1) return nextBitRows[0];
+    return filterBitRows(nextBitRows, bitPos + 1, criteria, bitMax);
 }
 
 const getFilterValue = (oneCount: number, zeroCount: number, criteria: "high" | "low") => {
