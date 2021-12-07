@@ -1,5 +1,4 @@
 import {getFileLines} from "../helper";
-import {join} from "path";
 
 const executeDay = async () => {
     const example1 = await getLanternFishes(__dirname + "/example.txt", 18);
