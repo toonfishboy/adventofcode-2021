@@ -10,28 +10,18 @@ const executeDay = async () => {
 };
 
 const getLanternFishes = async (filePath: string, days: number) => {
-    const fishes = (await getFileLines(filePath, (line) => line.split(",").map(value => parseInt(value))))[0];
-    const bigFishes: number[][] = [fishes];
-
+    const fishesAll = (await getFileLines(filePath, (line) => line.split(",").map(value => parseInt(value))))[0];
+    const fishes: bigint[] = [];
+    fishesAll.forEach(fish => fishes[fish] ? fishes[fish] += BigInt(1) : fishes[fish] = BigInt(1));
+    console.log(0, fishes.join());
     for (let i = 0; i < days; i++) {
-        const bigFishesLength = bigFishes.length;
-        for (let j = 0; j < bigFishesLength; j++) {
-            const fishLength = fishes.length;
-            for (let fishIndex = 0; fishIndex < fishLength; fishIndex++) {
-                if (fishes[fishIndex] > 0) fishes[fishIndex] -= 1;
-                else {
-                    fishes[fishIndex] = 6;
-                    fishes.push(8);
-                }
-            }
+        if (fishes[0]) {
+            fishes[8] ? fishes[8] += BigInt(fishes[0]) : fishes[8] = BigInt(fishes[0])
+            fishes[6] ? fishes[6] += BigInt(fishes[0]) : fishes[6] = BigInt(fishes[0])
         }
+        fishes.shift();
+        console.log(i + 1, fishes.join());
     }
-
-    let fishCount = BigInt(0);
-    for (const fishes of bigFishes) {
-        fishCount += BigInt(fishes.length);
-    }
-
-    return fishCount;
+    return fishes.reduce((result, value) => result + (value ?? BigInt(0)), BigInt(0));
 };
 executeDay();
