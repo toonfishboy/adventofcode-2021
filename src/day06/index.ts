@@ -1,12 +1,7 @@
 import {getFileLines} from "../helper";
 
-const executeDay = async () => {
-    const example1 = await getLanternFishes(__dirname + "/example.txt", 80);
-    const input1 = await getLanternFishes(__dirname + "/input.txt", 80);
-    const example2 = await getLanternFishes(__dirname + "/example.txt", 256);
-    const input2 = await getLanternFishes(__dirname + "/input.txt", 256);
-    console.log({example1, input1, example2, input2});
-};
+export const executePart1 = (filePath: string) => getLanternFishes(filePath,80);
+export const executePart2 = (filePath: string) => getLanternFishes(filePath, 256);
 
 const getLanternFishes = async (filePath: string, days: number) => {
     const fishesAll = (await getFileLines(filePath, (line) => line.split(",").map(value => parseInt(value))))[0];
@@ -21,4 +16,3 @@ const getLanternFishes = async (filePath: string, days: number) => {
     }
     return fishes.reduce((result, value) => result + (value ?? BigInt(0)), BigInt(0));
 };
-executeDay();

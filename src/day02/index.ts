@@ -1,14 +1,6 @@
 import {getFileLines} from "../helper";
 
-const executeDay = async () => {
-    const example1 = await getPosition(__dirname + "/example.txt");
-    const input1 = await getPosition(__dirname + "/input.txt");
-    const example2 = await getPositionWithAim(__dirname + "/example.txt");
-    const input2 = await getPositionWithAim(__dirname + "/input.txt");
-    console.log({example1, input1, example2, input2});
-};
-
-const getPosition = async (filePath: string) => {
+export const executePart1 = async (filePath: string) => {
     const lines = await getFileLines(filePath, parseCommands);
     const result = lines.reduce(({horizontal, depth}, {direction, amount}) => {
         if (direction === "forward") return {horizontal: horizontal + amount, depth};
@@ -17,7 +9,7 @@ const getPosition = async (filePath: string) => {
     return result.horizontal * result.depth;
 };
 
-const getPositionWithAim = async (filePath: string) => {
+export const executePart2 = async (filePath: string) => {
     const lines = await getFileLines(filePath, parseCommands);
     const result = lines.reduce(({horizontal, depth, aim}, {direction, amount}) => {
         if (direction === "forward") return {horizontal: horizontal + amount, depth: (depth + (aim * amount)), aim};
@@ -31,5 +23,3 @@ const parseCommands = (value: string) => {
     const amountValue = parseInt(amount);
     return {direction, amount: amountValue};
 }
-
-executeDay();

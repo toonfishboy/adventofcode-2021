@@ -1,17 +1,9 @@
 import {getFileLines} from "../helper";
 
-const executeDay = async () => {
-    const example1 = await findEasyDigits(__dirname + "/example.txt");
-    const input1 = await findEasyDigits(__dirname + "/input.txt");
-    const example2 = await findDigits(__dirname + "/example.txt");
-    const input2 = await findDigits(__dirname + "/input.txt");
-    console.log({example1, input1, example2, input2});
-};
-
 const isEasyNumber = (value: string) => [2, 3, 4, 7].includes(value.length);
 const isNotEasyNumber = (value: string) => !isEasyNumber(value);
 
-const findEasyDigits = async (filePath: string) => {
+export const executePart1 = async (filePath: string) => {
     const lines = await getFileLines(filePath);
     const [, output] = lines.reduce((result: string[][], line) => {
         const [, o] = line.split("|").map(value => value.trim().split(" "));
@@ -21,7 +13,7 @@ const findEasyDigits = async (filePath: string) => {
     return output.filter(isEasyNumber).length;
 };
 
-const findDigits = async (filePath: string) => {
+export const executePart2 = async (filePath: string) => {
     const lines = await getFileLines(filePath);
     const result = lines.map(line => {
         const [input, output] = line.split("|").map(value => value.trim().split(" ").map(v => v.split("").sort().join("")));
@@ -56,4 +48,3 @@ const findDigits = async (filePath: string) => {
     });
     return result.reduce((a, b) => a + b, 0);
 };
-executeDay();

@@ -1,14 +1,6 @@
 import {getFileLines} from "../helper";
 
-const executeDay = async () => {
-    const example1 = await calculatePowerConsumption(__dirname + "/example.txt");
-    const input1 = await calculatePowerConsumption(__dirname + "/input.txt");
-    const example2 = await calculateLifeSupportRating(__dirname + "/example.txt");
-    const input2 = await calculateLifeSupportRating(__dirname + "/input.txt");
-    console.log({example1, input1, example2, input2});
-};
-
-const calculatePowerConsumption = async (filePath: string) => {
+export const executePart1 = async (filePath: string) => {
     const lines = await getFileLines(filePath);
     const bits: string[][] = [];
     lines.forEach((line) => {
@@ -28,7 +20,7 @@ const calculatePowerConsumption = async (filePath: string) => {
     return parseBits(gamma) * parseBits(epsilon);
 };
 
-const calculateLifeSupportRating = async (filePath: string) => {
+export const executePart2 = async (filePath: string) => {
     const lines = await getFileLines(filePath, (line) => line.split(""));
     const bitMax = lines[0].length;
     const oxygenGeneratorRating = filterBitRows(lines, 0, "high", bitMax);
@@ -56,5 +48,3 @@ const getFilterValue = (oneCount: number, zeroCount: number, criteria: "high" | 
 }
 
 const parseBits = (bits: string[]) => parseInt(bits.join(""), 2);
-
-executeDay();

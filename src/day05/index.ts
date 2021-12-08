@@ -1,12 +1,7 @@
 import {getFileLines} from "../helper";
 
-const executeDay = async () => {
-    const example1 = await findOverlappingPoints(__dirname + "/example.txt");
-    const input1 = await findOverlappingPoints(__dirname + "/input.txt");
-    const example2 = await findOverlappingPoints(__dirname + "/example.txt", true);
-    const input2 = await findOverlappingPoints(__dirname + "/input.txt", true);
-    console.log({example1, input1, example2, input2});
-};
+export const executePart1 = (filePath: string) => findOverlappingPoints(filePath);
+export const executePart2 = (filePath: string) => findOverlappingPoints(filePath, true);
 
 const findOverlappingPoints = async (filePath: string, hasDiagonal: boolean = false) => {
     const inputs = await getFileLines(filePath);
@@ -63,4 +58,3 @@ const getWaypoints = (line: number[][], hasDiagonal: boolean) => {
     }
     return wayPoints;
 }
-executeDay();

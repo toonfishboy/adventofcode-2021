@@ -1,12 +1,7 @@
 import {getFileLines} from "../helper";
 
-const executeDay = async () => {
-    const example1 = await alignCrabs(__dirname + "/example.txt");
-    const input1 = await alignCrabs(__dirname + "/input.txt");
-    const example2 = await alignCrabs(__dirname + "/example.txt", true);
-    const input2 = await alignCrabs(__dirname + "/input.txt", true);
-    console.log({example1, input1, example2, input2});
-};
+export const executePart1 = (filePath: string) => alignCrabs(filePath);
+export const executePart2 = (filePath: string) => alignCrabs(filePath, true);
 
 const alignCrabs = async (filePath: string, isSecondPart?: boolean) => {
     const crabs = (await getFileLines(filePath, (line) => line.split(",").map(value => parseInt(value))))[0];
@@ -24,4 +19,3 @@ const alignCrabs = async (filePath: string, isSecondPart?: boolean) => {
     }
     return Math.min(...positions);
 };
-executeDay();
