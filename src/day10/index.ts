@@ -19,9 +19,7 @@ const calcLines = async (filePath: string) => {
                     illegalChars.push(char);
                     illegal = true;
                     break;
-                } else {
-                    open = open.slice(0, -1);
-                }
+                } else open.pop();
             }
         }
         if (!illegal)
