@@ -3,17 +3,20 @@ import {getFileLines} from "../helper";
 const matrix: [number, number][] = [[0, 1], [1, 0], [1, 1], [-1, 0], [0, -1], [-1, -1], [-1, 1], [1, -1]];
 
 const checkOctopuses = (octopuses: number[][]) => {
+    const copy = [...octopuses];
     let flashes = 0;
     for (let i = 0; i < octopuses.length; i++) {
         for (let j = 0; j < octopuses[i].length; j++) {
-            if (octopuses[i][j] > 9) {
+            if (copy[i][j] > 9) {
                 //flashes++;
                 matrix.forEach(([x, y]) => {
-                    if (octopuses?.[i + x]?.[j + y]) octopuses[i + x][j + y] += 1;
+                    console.log(i, j, i + x, j + y, copy?.[i + x]?.[j + y], copy);
+                    if (copy?.[i + x]?.[j + y] !== undefined) copy[i + x][j + y] += 1;
                 });
             }
         }
     }
+    octopuses = copy;
     return flashes;
 };
 
@@ -39,8 +42,8 @@ export const executePart1 = async (filePath: string) => {
     let allFlashes = 0;
     for (let index = 0; index < 2; index++) {
         addOctopuses(octopuses);
-        const flashes = checkOctopuses(octopuses);
-        writeOctopuses(octopuses);
+        checkOctopuses(octopuses);
+        writeOctopuses([...octopuses]);
         resetOctopuses(octopuses);
     }
     return allFlashes;
